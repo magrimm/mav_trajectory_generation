@@ -1,0 +1,3 @@
+[submodule "mav_trajectory_generation_ros/submodules/mav_trajectory_generation_cmake"]
+	path = mav_trajectory_generation_ros/submodules/mav_trajectory_generation_cmake
+	url = git@github.com:magrimm/mav_trajectory_generation_cmake.git
