@@ -21,13 +21,17 @@ cs_add_library(${PROJECT_NAME}
   src/trajectory_sampling.cpp
 )
 
+set(BUILD_SHARED_LIBS ON)
+add_subdirectory(submodules/mav_trajectory_generation_cmake/)
+include_directories(submodules/mav_trajectory_generation_cmake/mav_trajectory_generation/include)
+
 ############
 # BINARIES #
 ############
 cs_add_executable(trajectory_sampler_node
   src/trajectory_sampler_node.cpp
 )
-target_link_libraries(trajectory_sampler_node ${PROJECT_NAME})
+target_link_libraries(trajectory_sampler_node ${PROJECT_NAME} mav_trajectory_generation)
 
 #########
 # TESTS #
