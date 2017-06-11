@@ -22,8 +22,9 @@ cs_add_library(${PROJECT_NAME}
 )
 
 set(BUILD_SHARED_LIBS ON)
-add_subdirectory(submodules/mav_trajectory_generation_cmake/)
+add_subdirectory(submodules/mav_trajectory_generation_cmake)
 include_directories(submodules/mav_trajectory_generation_cmake/mav_trajectory_generation/include)
+target_link_libraries(${PROJECT_NAME} mav_trajectory_generation)
 
 ############
 # BINARIES #
