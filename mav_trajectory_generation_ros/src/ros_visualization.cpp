@@ -166,6 +166,7 @@ void drawMavSampledTrajectoryWithMavMarker(
 }
 
 void drawVertices(const Vertex::Vector& vertices, const std::string& frame_id,
+                  const std::string& ns,
                   visualization_msgs::MarkerArray* marker_array) {
   CHECK_NOTNULL(marker_array);
   marker_array->markers.resize(1);
@@ -173,8 +174,8 @@ void drawVertices(const Vertex::Vector& vertices, const std::string& frame_id,
 
   marker.type = visualization_msgs::Marker::LINE_STRIP;
   marker.color = mav_visualization::Color::Chartreuse();
-  marker.scale.x = 0.01;
-  marker.ns = "straight_path";
+  marker.scale.x = 0.04;
+  marker.ns = ns;
 
   for (const Vertex& vertex : vertices) {
     if (vertex.D() != 3) {

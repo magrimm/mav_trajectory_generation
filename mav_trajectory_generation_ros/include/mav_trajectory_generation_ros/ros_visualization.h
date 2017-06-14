@@ -58,6 +58,7 @@ void drawMavSampledTrajectoryWithMavMarker(
 
 // Visualize original vertices.
 void drawVertices(const Vertex::Vector& vertices, const std::string& frame_id,
+                  const std::string& ns,
                   visualization_msgs::MarkerArray* marker_array);
 
 }  // namespace mav_trajectory_generation
