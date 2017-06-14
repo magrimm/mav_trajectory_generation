@@ -108,8 +108,8 @@ void drawMavSampledTrajectoryWithMavMarker(
 
   visualization_msgs::Marker line_strip;
   line_strip.type = visualization_msgs::Marker::LINE_STRIP;
-  line_strip.color = mav_visualization::Color::Orange();
-  line_strip.scale.x = 0.01;
+  line_strip.color = mav_visualization::Color::Black();
+  line_strip.scale.x = 0.04;
   line_strip.ns = "path";
 
   double accumulated_distance = 0.0;
