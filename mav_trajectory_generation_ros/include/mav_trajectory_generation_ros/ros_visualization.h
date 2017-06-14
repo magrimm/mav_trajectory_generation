@@ -61,6 +61,11 @@ void drawVertices(const Vertex::Vector& vertices, const std::string& frame_id,
                   const std::string& ns,
                   visualization_msgs::MarkerArray* marker_array);
 
+// Visualize vertices.
+void drawVertices(const std::vector<Eigen::Vector3d>& vertices,
+                  const std::string& frame_id, const std::string& ns,
+                  visualization_msgs::MarkerArray* marker_array);
+
 }  // namespace mav_trajectory_generation
 
 #endif  // MAV_TRAJECTORY_GENERATION_ROS_ROS_CONVERSIONS_H_

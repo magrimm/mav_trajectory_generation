@@ -201,4 +201,29 @@ void drawVertices(const Vertex::Vector& vertices, const std::string& frame_id,
                                 marker_array);
 }
 
+void drawVertices(const std::vector<Eigen::Vector3d>& vertices,
+                  const std::string& frame_id, const std::string& ns,
+                  visualization_msgs::MarkerArray* marker_array) {
+  CHECK_NOTNULL(marker_array);
+  visualization_msgs::Marker marker;
+
+  marker.type = visualization_msgs::Marker::LINE_STRIP;
+  marker.color = mav_visualization::Color::Orange();
+  marker.scale.x = 0.04;
+  marker.ns = ns;
+
+  for (const auto& vertex : vertices) {
+    geometry_msgs::Point constraint_msg;
+    tf::pointEigenToMsg(vertex, constraint_msg);
+    marker.points.push_back(constraint_msg);
+  }
+  marker_array->markers.push_back(marker);
+
+  std_msgs::Header header;
+  header.frame_id = frame_id;
+  header.stamp = ros::Time::now();
+  internal::setMarkerProperties(header, 0.0, visualization_msgs::Marker::ADD,
+                                marker_array);
+}
+
 }  // namespace mav_trajectory_generation
