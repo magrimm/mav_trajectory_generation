@@ -172,8 +172,7 @@ void drawVertices(const Vertex::Vector& vertices, const std::string& frame_id,
                   const std::string& ns,
                   visualization_msgs::MarkerArray* marker_array) {
   CHECK_NOTNULL(marker_array);
-  marker_array->markers.resize(1);
-  visualization_msgs::Marker& marker = marker_array->markers.front();
+  visualization_msgs::Marker marker;
 
   marker.type = visualization_msgs::Marker::LINE_STRIP;
   marker.color = mav_visualization::Color::Chartreuse();
@@ -196,6 +195,7 @@ void drawVertices(const Vertex::Vector& vertices, const std::string& frame_id,
     } else
       ROS_WARN("Vertex does not have a position constraint, skipping.");
   }
+  marker_array->markers.push_back(marker);
 
   std_msgs::Header header;
   header.frame_id = frame_id;
