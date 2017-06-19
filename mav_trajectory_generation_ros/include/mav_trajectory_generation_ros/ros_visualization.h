@@ -22,6 +22,7 @@
 #define MAV_TRAJECTORY_GENERATION_ROS_ROS_VISUALIZATION_H_
 
 #include <mav_msgs/eigen_mav_msgs.h>
+#include <mav_visualization/helpers.h>
 #include <mav_visualization/marker_group.h>
 #include <visualization_msgs/MarkerArray.h>
 
@@ -34,6 +35,7 @@ namespace mav_trajectory_generation {
 // If distance = 0.0, then these additional markers are disabled.
 void drawMavTrajectory(const Trajectory& trajectory, double distance,
                        const std::string& frame_id,
+                       const mav_visualization::Color& color,
                        visualization_msgs::MarkerArray* marker_array);
 
 // Draw an eigen trajectory with additional markers spaced by distance (0.0 to
@@ -46,13 +48,14 @@ void drawMavSampledTrajectory(
 // distance.
 void drawMavTrajectoryWithMavMarker(
     const Trajectory& trajectory, double distance, const std::string& frame_id,
+    const mav_visualization::Color& color,
     const mav_visualization::MarkerGroup& additional_marker,
     visualization_msgs::MarkerArray* marker_array);
 
 // Draw a eigen trajectory with additional marker.
 void drawMavSampledTrajectoryWithMavMarker(
     const mav_msgs::EigenTrajectoryPoint::Vector& flat_states, double distance,
-    const std::string& frame_id,
+    const std::string& frame_id, const mav_visualization::Color& color,
     const mav_visualization::MarkerGroup& additional_marker,
     visualization_msgs::MarkerArray* marker_array);
 

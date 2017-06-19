@@ -64,25 +64,28 @@ static constexpr double kDefaultSamplingTime = 0.1;
 
 void drawMavTrajectory(const Trajectory& trajectory, double distance,
                        const std::string& frame_id,
+                       const mav_visualization::Color& color,
                        visualization_msgs::MarkerArray* marker_array) {
   // This is just an empty extra marker that doesn't draw anything.
   mav_visualization::MarkerGroup dummy_marker;
-  return drawMavTrajectoryWithMavMarker(trajectory, distance, frame_id,
+  return drawMavTrajectoryWithMavMarker(trajectory, distance, frame_id, color,
                                         dummy_marker, marker_array);
 }
 
 void drawMavSampledTrajectory(
     const mav_msgs::EigenTrajectoryPoint::Vector& flat_states, double distance,
-    const std::string& frame_id,
+    const std::string& frame_id, const mav_visualization::Color& color,
     visualization_msgs::MarkerArray* marker_array) {
   // This is just an empty extra marker that doesn't draw anything.
   mav_visualization::MarkerGroup dummy_marker;
   return drawMavSampledTrajectoryWithMavMarker(flat_states, distance, frame_id,
-                                               dummy_marker, marker_array);
+                                               color, dummy_marker,
+                                               marker_array);
 }
 
 void drawMavTrajectoryWithMavMarker(
     const Trajectory& trajectory, double distance, const std::string& frame_id,
+    const mav_visualization::Color& color,
     const mav_visualization::MarkerGroup& additional_marker,
     visualization_msgs::MarkerArray* marker_array) {
   // Sample the trajectory.
@@ -94,13 +97,13 @@ void drawMavTrajectoryWithMavMarker(
     return;
   }
   // Draw the trajectory.
-  drawMavSampledTrajectoryWithMavMarker(flat_states, distance, frame_id,
+  drawMavSampledTrajectoryWithMavMarker(flat_states, distance, frame_id, color,
                                         additional_marker, marker_array);
 }
 
 void drawMavSampledTrajectoryWithMavMarker(
     const mav_msgs::EigenTrajectoryPoint::Vector& flat_states, double distance,
-    const std::string& frame_id,
+    const std::string& frame_id, const mav_visualization::Color& color,
     const mav_visualization::MarkerGroup& additional_marker,
     visualization_msgs::MarkerArray* marker_array) {
   CHECK_NOTNULL(marker_array);
@@ -108,7 +111,7 @@ void drawMavSampledTrajectoryWithMavMarker(
 
   visualization_msgs::Marker line_strip;
   line_strip.type = visualization_msgs::Marker::LINE_STRIP;
-  line_strip.color = mav_visualization::Color::Black();
+  line_strip.color = color;
   line_strip.scale.x = 0.04;
   line_strip.ns = "path";
 
