@@ -34,7 +34,7 @@ namespace mav_trajectory_generation {
 // Draws the trajectory of the MAV, with additional markers spaced by distance.
 // If distance = 0.0, then these additional markers are disabled.
 void drawMavTrajectory(const Trajectory& trajectory, double distance,
-                       const std::string& frame_id,
+                       const std::string& frame_id, const std::string& ns,
                        const mav_visualization::Color& color,
                        visualization_msgs::MarkerArray* marker_array);
 
@@ -42,20 +42,22 @@ void drawMavTrajectory(const Trajectory& trajectory, double distance,
 // disable).
 void drawMavSampledTrajectory(
     const mav_msgs::EigenTrajectoryPoint::Vector& flat_states, double distance,
-    const std::string& frame_id, visualization_msgs::MarkerArray* marker_array);
+    const std::string& frame_id, const std::string& ns,
+    visualization_msgs::MarkerArray* marker_array);
 
 // Same as drawMavTrajectory, but also draws an additional marker at a set
 // distance.
 void drawMavTrajectoryWithMavMarker(
     const Trajectory& trajectory, double distance, const std::string& frame_id,
-    const mav_visualization::Color& color,
+    const std::string& ns, const mav_visualization::Color& color,
     const mav_visualization::MarkerGroup& additional_marker,
     visualization_msgs::MarkerArray* marker_array);
 
 // Draw a eigen trajectory with additional marker.
 void drawMavSampledTrajectoryWithMavMarker(
     const mav_msgs::EigenTrajectoryPoint::Vector& flat_states, double distance,
-    const std::string& frame_id, const mav_visualization::Color& color,
+    const std::string& frame_id, const std::string& ns,
+    const mav_visualization::Color& color,
     const mav_visualization::MarkerGroup& additional_marker,
     visualization_msgs::MarkerArray* marker_array);
 
