@@ -53,6 +53,11 @@ void drawMavTrajectoryWithMavMarker(
     const mav_visualization::MarkerGroup& additional_marker,
     visualization_msgs::MarkerArray* marker_array);
 
+// Draw the segment start and end
+void drawSegmentsStartEnd(
+    const Trajectory& trajectory, const std::string& frame_id,
+    const std::string& ns, visualization_msgs::MarkerArray* marker_array);
+
 // Draw a eigen trajectory with additional marker.
 void drawMavSampledTrajectoryWithMavMarker(
     const mav_msgs::EigenTrajectoryPoint::Vector& flat_states, double distance,

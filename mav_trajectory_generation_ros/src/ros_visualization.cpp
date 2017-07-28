@@ -103,6 +103,52 @@ void drawMavTrajectoryWithMavMarker(
                                         marker_array);
 }
 
+void drawSegmentsStartEnd(
+        const Trajectory& trajectory, const std::string& frame_id,
+        const std::string& ns, visualization_msgs::MarkerArray* marker_array) {
+  CHECK_NOTNULL(marker_array);
+
+  double start_time = 0.0;
+  Segment::Vector segments;
+  trajectory.getSegments(&segments);
+
+  // Add start pose
+  mav_msgs::EigenTrajectoryPoint start_point;
+  bool start_seg = sampleTrajectoryAtTime(trajectory, 0.0, &start_point);
+  mav_msgs::EigenMavState start_state;
+  mav_msgs::EigenMavStateFromEigenTrajectoryPoint(start_point, &start_state);
+  visualization_msgs::MarkerArray segment_pose_start;
+  mav_visualization::drawAxesArrows(start_point.position_W,
+                                    start_point.orientation_W_B, 0.3, 0.3,
+                                    &segment_pose_start);
+  internal::appendMarkers(segment_pose_start, ns, marker_array);
+
+  // Add all other poses
+  for (const auto& segment : segments) {
+    // Get segment start and end time
+    mav_msgs::EigenTrajectoryPoint end_point;
+    double end_time = start_time + segment.getTime();
+    // TODO: Hack with -0.001 since last segment cannot take exact timestamp
+    sampleTrajectoryAtTime(trajectory, end_time-0.001, &end_point);
+    visualization_msgs::MarkerArray segment_pose_end;
+    mav_msgs::EigenMavState end_state;
+    mav_msgs::EigenMavStateFromEigenTrajectoryPoint(end_point, &end_state);
+    mav_visualization::drawAxesArrows(end_state.position_W,
+                                      end_state.orientation_W_B, 0.3, 0.3,
+                                      &segment_pose_end);
+    internal::appendMarkers(segment_pose_end, ns, marker_array);
+
+    // Set new segment start time for next segment
+    start_time = end_time;
+  }
+
+  std_msgs::Header header;
+  header.frame_id = frame_id;
+  header.stamp = ros::Time::now();
+  internal::setMarkerProperties(header, 0.0, visualization_msgs::Marker::ADD,
+                                marker_array);
+}
+
 void drawMavSampledTrajectoryWithMavMarker(
     const mav_msgs::EigenTrajectoryPoint::Vector& flat_states, double distance,
     const std::string& frame_id, const std::string& ns,
