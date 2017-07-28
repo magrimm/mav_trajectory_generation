@@ -149,6 +149,38 @@ void drawSegmentsStartEnd(
                                 marker_array);
 }
 
+void drawPoseTrajectoryTimes(
+        const Trajectory& trajectory, const std::vector<double>& times,
+        const std::string& frame_id, const std::string& ns,
+        const mav_visualization::Color& color,
+        visualization_msgs::MarkerArray* marker_array) {
+
+  for (const auto& t : times) {
+    mav_msgs::EigenTrajectoryPoint point;
+    sampleTrajectoryAtTime(trajectory, t, &point);
+
+    visualization_msgs::Marker sphere;
+    sphere.type = visualization_msgs::Marker::SPHERE;
+    sphere.color = color;
+    sphere.scale.x = 0.12;
+    sphere.scale.y = 0.12;
+    sphere.scale.z = 0.12;
+    sphere.ns = ns;
+    sphere.pose.position.x = point.position_W[0];
+    sphere.pose.position.y = point.position_W[1];
+    sphere.pose.position.z = point.position_W[2];
+    sphere.pose.orientation.w = 1.0;
+
+    marker_array->markers.push_back(sphere);
+  }
+
+  std_msgs::Header header;
+  header.frame_id = frame_id;
+  header.stamp = ros::Time::now();
+  internal::setMarkerProperties(header, 0.0, visualization_msgs::Marker::ADD,
+                                marker_array);
+}
+
 void drawMavSampledTrajectoryWithMavMarker(
     const mav_msgs::EigenTrajectoryPoint::Vector& flat_states, double distance,
     const std::string& frame_id, const std::string& ns,

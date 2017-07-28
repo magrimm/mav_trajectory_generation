@@ -58,6 +58,12 @@ void drawSegmentsStartEnd(
     const Trajectory& trajectory, const std::string& frame_id,
     const std::string& ns, visualization_msgs::MarkerArray* marker_array);
 
+void drawPoseTrajectoryTimes(
+        const Trajectory& trajectory, const std::vector<double>& times,
+        const std::string& frame_id, const std::string& ns,
+        const mav_visualization::Color& color,
+        visualization_msgs::MarkerArray* marker_array);
+
 // Draw a eigen trajectory with additional marker.
 void drawMavSampledTrajectoryWithMavMarker(
     const mav_msgs::EigenTrajectoryPoint::Vector& flat_states, double distance,
